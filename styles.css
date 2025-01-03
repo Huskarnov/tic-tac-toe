@@ -54,8 +54,9 @@
 
         font-family: "spicy rice";
         font-size: 3rem;
+        
     }
-
+    
     .gameSpace{
         display: flex;
         flex-direction: column;
@@ -67,11 +68,18 @@
         width: 900px;
         height:900px;
         
-        background-color: rgb(36, 36, 7);
+        background-color: rgb(58, 110, 27);
 
         border-radius: 15px;
-        border: groove;
+        border: groove;    
 
+        /* filter: blur(2px); */
+        animation: blendIn 0.3s ease-in-out  ;
+    }
+
+    @keyframes blendIn {
+        0% { filter: blur(2px)}
+        100% {filter: blur(0)}
     }
 
     .stop{
@@ -82,13 +90,16 @@
 
         height: 50px; width: 50px;
 
-        color: beige;
+        color: rgba(245, 245, 220, 0.747);
 
         cursor: pointer;
+
+        animation: blendIn 0.3s ease-in-out  ;
+        
     }
 
     .gameSpace > h1{
-        color: beige;
+        color: rgba(245, 245, 220, 0.884);
         font-size: 7rem;
 
         padding: 0;
@@ -115,7 +126,7 @@
         align-items: center;
         justify-content: center;
 
-        background-color: grey;
+        background-color: rgba(128, 128, 128, 0.26);
         border: groove;
 
     }
@@ -123,19 +134,22 @@
     .gameSpace > button {
         display: block;
         font-size: 4rem;
-        color: #252520;
+        color: #e4e4d8;
 
         padding: 5px 40px;
-        margin-top: 30px;
+        margin-top: 55px;
 
         border-radius: 15px;
         border: 5px groove rgb(235, 230, 221);
 
         cursor: pointer;
+        
+        background-color: rgba(128, 128, 128, 0.363);
+        
+        animation: blendIn 0.3s ease-in-out  ;
 
-        background-color: grey;
     }   
-
+/* ////////////////////  SCORE ///////////////////////// */
     .score{
         
         display: none;
@@ -147,12 +161,14 @@
 
         width: 600px;
 
+        animation: blendIn 0.3s ease-in-out  ;
+
 
     }
 
-    .gameSpace h2{
+    .score h2{
         font-size: 5rem;
-        color: beige;
+        color: rgba(245, 245, 220, 0.705);
     }
 
     .scorePannel{
@@ -161,19 +177,25 @@
 
     }
 
-    .scorePannel div:nth-child(1){
+
+    .scorePannel div{
         display: flex;
         align-items: center;
         gap: 10px;
 
-        color: red;
         font-size: 6rem;
 
-        background-color: grey;
-        padding: 0 30px;
+        background-color: #80808063;
+        padding-left: 20px;
+        padding-right: 33px;
 
         border-radius: 15px;
 
+        border: groove;
+    }
+
+    .scorePannel div:nth-child(1){
+        color: red;
     }
 
     .scorePannel div:nth-child(1) p{
@@ -182,17 +204,7 @@
     }
 
     .scorePannel div:nth-child(2){
-        display: flex;
-        align-items: center;
-        gap: 10px;
-
         color: blue;
-        font-size: 6rem;
-
-        background-color: grey;
-        padding: 0 30px;
-
-        border-radius: 15px;
     }
 
     .scorePannel div:nth-child(2) p{
@@ -200,3 +212,27 @@
         font-size: 6rem;
     }
 
+/* ////////////////////  WINNER ALERT ///////////////////////// */
+
+.alert{
+    display: none;
+    position: absolute;
+
+    font-size: 15rem;
+    color: white;
+    text-shadow: 0 0 5px beige;
+    text-shadow: 0 0 10px rgb(189, 189, 151);
+
+    top: 40%;
+
+    animation: wizz 0.1s linear 2;
+    user-select: none;
+
+    cursor: pointer;
+    /* filter: blur(0); */
+}
+
+@keyframes wizz {
+    0% {transform: scale(1);}
+    100% {transform: scale(1.1);}
+}

@@ -55,6 +55,7 @@ let gameboard = (function GameBoard(){ //data manager object
                             console.log(`Player ${player} WINS`);
                             addScore();
                             gameOn = false; 
+                            domManager.showAlert();
                     }
                 };
             
@@ -86,12 +87,15 @@ let gameboard = (function GameBoard(){ //data manager object
             console.log('Player 2 score:',playerTwoScore);
         }
 
+        const clearArray = function(){
+            for(let i = 8; i >=0; i-- ){
+                gameboardArray[i] = 'n';
+    
+                }
+        };
 
         const newGame = function(){
-            for(let i = 8; i >=0; i-- ){
-            gameboardArray[i] = 'n';
-
-            }
+            clearArray();
             gameOn = true; 
             player = 1;
             playerOneScore = 0;
@@ -101,8 +105,11 @@ let gameboard = (function GameBoard(){ //data manager object
         const stopGame = function(){
             gameOn = false;
         }
+        const startGame = function(){
+            gameOn = true;
+        }
 
-        return {getPlayer,getArray, getGameOn,check, gameOver, newGame, stopGame};
+        return {getPlayer,getArray, getGameOn,check, gameOver, newGame, stopGame, startGame, clearArray};
 })();
 
 // ////////////////////////////////////////////////////////////////
@@ -121,13 +128,17 @@ let gameboard = (function GameBoard(){ //data manager object
 
 let domManager = (function(){
 
+    const gameSpace = document.querySelector('.gameSpace');
     const stop = document.querySelector('.stop');
     const newGameButton = document.querySelector('.gameSpace>button');
+    const theGameGrid = document.querySelector('.gameGrid');
     const scorePannel = document.querySelector('.score');
     const scoreOne = document.querySelector('.scorePannel div:nth-child(1) p');
     const scoretwo = document.querySelector('.scorePannel div:nth-child(2) p');
-
+    const alert = document.querySelector('.alert');
     const arrayOfGridItems = (document.querySelector('.gameGrid')).children;
+
+    
     
     //set tiles click event
     for( let i = 8; i >= 0; i--){ 
@@ -143,22 +154,37 @@ let domManager = (function(){
             };
 
             gameboard.check(i);
+            if(gameboard.getPlayer() == 1){
+                theGameGrid.style.cursor = 'url(cursors/crossCursor.png), auto';
+            }else{
+            theGameGrid.style.cursor = 'url(cursors/circleCursor.png), auto';
+            };
                 };
             }
         );
     }
 
+    //new game event
     newGameButton.addEventListener('click', ()=>{
         newGameButton.style.display = 'none';
         stop.style.display = 'block';
         scorePannel.style.display = 'flex';
         gameboard.newGame();
 
+        if(gameboard.getPlayer() == 1){
+            theGameGrid.style.cursor = 'url(cursors/crossCursor.png), auto';
+        }else{
+        theGameGrid.style.cursor = 'url(cursors/circleCursor.png), auto';
+        };
+
         
     });
 
+    //stop event
     stop.addEventListener('click', ()=>{
-        stop.style.display = 'none';
+
+        if(gameboard.getGameOn() == true){
+            stop.style.display = 'none';
         newGameButton.style.display = 'block';
         scorePannel.style.display = 'none';
         
@@ -168,14 +194,32 @@ let domManager = (function(){
 
         clearBoard();
 
+        }
+        
+
     });
     
+    alert.addEventListener('click', ()=>{
+        alert.style.display = 'none';
+        gameSpace.style.filter = 'blur(0)';
+
+        for(let i = 8; i >= 0; i--){
+            arrayOfGridItems[i].innerHTML = '';
+        }
+        gameboard.startGame();
+        gameboard.clearArray();
+
+    });
+
     const clearBoard = function(){
         for(let i = 8; i >= 0; i--){
             arrayOfGridItems[i].innerHTML = '';
         }
         scoreOne.innerHTML = '0';
         scoretwo.innerHTML = '0';
+
+        theGameGrid.style.cursor = 'default';
+        
     };
 
     const renderScore = function(scorePone, scorePtwo){
@@ -183,9 +227,20 @@ let domManager = (function(){
             scoretwo.innerHTML = scorePtwo.toString();
     };
 
-    return {renderScore};
-})()
+    const showAlert = function(){
+        
+        if(gameboard.getPlayer() == 1){
+            alert.style.color = 'red';
+        }else{
+            alert.style.color = 'blue';
+        };
 
+        alert.style.display = 'block';
+        gameSpace.style.filter = 'blur(11px)';
+    };
+
+    return {renderScore, showAlert};
+})()
 
 
 
