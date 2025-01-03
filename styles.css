@@ -44,10 +44,133 @@
 
 
     section{
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
         height: 100vh;
         width: 100vw;
         background-color: beige;
 
         font-family: "spicy rice";
         font-size: 3rem;
+    }
+
+    .gameSpace{
+        display: flex;
+        flex-direction: column;
+
+        align-items: center;
+        justify-items: center;
+
+        position: relative;
+        width: 900px;
+        height:900px;
+        
+        background-color: rgb(36, 36, 7);
+
+        border-radius: 15px;
+        border: groove;
+
+    }
+
+    .stop{
+
+        display: none;
+        position: absolute;
+        top: 20px; right: 20px;
+
+        height: 50px; width: 50px;
+
+        color: beige;
+
+        cursor: pointer;
+    }
+
+    .gameSpace > h1{
+        color: beige;
+        font-size: 8rem;
+
+        margin-top: 30px;
+        padding: 0;
+        margin: 0;
+        /* background-color: red; */
+
+    }
+
+    .gameGrid{
+
+        display: grid;
+        grid-template: repeat(3, 1fr)/repeat(3, 1fr);
+
+        height: 600px;
+        width: 600px;
+
+        gap: 10px;
+        
+    }
+
+    .gameGrid div{
+        /* box-shadow: 0 0 5px rgb(214, 205, 154); */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background-color: grey;
+        border: groove;
+
+    }
+
+    .gameSpace > button {
+        display: none;
+        font-size: 4rem;
+        color: #252520;
+
+        padding: 5px 40px;
+        margin-top: 30px;
+
+        border-radius: 15px;
+        border: 5px groove rgb(235, 230, 221);
+
+        cursor: pointer;
+
+        background-color: grey;
+    }   
+
+    .score{
+        display: flex;
+        flex-direction: column;
+
+        align-items: center;
+
+        /* background-color: red; */
+
+        width: 600px;
+    }
+
+    .gameSpace h2{
+        font-size: 5rem;
+        color: beige;
+    }
+
+    .scorePannel{
+        display: flex;
+        gap: 200px;
+    }
+
+    .scorePannel div:nth-child(1){
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        color: red;
+        font-size: 4rem;
+    }
+    .scorePannel div:nth-child(2){
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        color: blue;
+        font-size: 4rem;
     }

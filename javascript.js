@@ -12,9 +12,11 @@ let gameboard = (function GameBoard(){ //data manager object
         let playerOneScore = 0;
         let playerTwoScore = 0;
 
-        let gameOn = true;
+        let gameOn = false;
 
         const getArray = ()=>{return gameboardArray};
+        const getPlayer = ()=>{return player};
+        const getGameOn = ()=>{return gameOn};
 
         const check = function(index){
             
@@ -91,10 +93,13 @@ let gameboard = (function GameBoard(){ //data manager object
             }
             gameOn = true; 
             player = 1;
-
         }
 
-        return {getArray, check, gameOver, newGame};
+        const stopGame = function(){
+            gameOn = false;
+        }
+
+        return {getPlayer,getArray, getGameOn,check, gameOver, newGame, stopGame};
 })();
 
 // ////////////////////////////////////////////////////////////////
@@ -111,41 +116,89 @@ let gameboard = (function GameBoard(){ //data manager object
         };
 // ////////////////////////////////////////////////////////////////
 
-let domManager = function(){
+let domManager = (function(){
 
+    const stop = document.querySelector('.stop');
+    const newGameButton = document.querySelector('.gameSpace>button');
+    const arrayOfGridItems = (document.querySelector('.gameGrid')).children;
     
+    //set tiles click event
+    for( let i = 8; i >= 0; i--){ 
+        (arrayOfGridItems[i]).addEventListener('click', ()=>{
+            
+            if(gameboard.getGameOn() && arrayOfGridItems[i].innerHTML == ''){
+            if(gameboard.getPlayer() == 1){
+                arrayOfGridItems[i].innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="150px" height="150px" viewBox="0 0 24 24"><path fill="currentColor" d="M20 6.91L17.09 4L12 9.09L6.91 4L4 6.91L9.09 12L4 17.09L6.91 20L12 14.91L17.09 20L20 17.09L14.91 12z"/></svg>`;
+                arrayOfGridItems[i].style.color = 'red';
+            }else{
+                arrayOfGridItems[i].innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="150px" height="150px" viewBox="0 0 24 24"><path fill="currentColor" d="M12 20a8 8 0 0 1-8-8a8 8 0 0 1 8-8a8 8 0 0 1 8 8a8 8 0 0 1-8 8m0-18A10 10 0 0 0 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2"/></svg>`;
+                arrayOfGridItems[i].style.color = 'blue';
+            };
 
-}
+            gameboard.check(i);
+                };
+            }
+        );
+    }
+
+    newGameButton.addEventListener('click', ()=>{
+        newGameButton.style.display = 'none';
+        stop.style.display = 'block';
+        gameboard.newGame();
+
+        
+    });
+
+    stop.addEventListener('click', ()=>{
+        stop.style.display = 'none';
+        newGameButton.style.display = 'block';
+        gameboard.newGame();
+        gameboard.stopGame();
+
+        clearBoard();
+
+    });
+    
+    const clearBoard = function(){
+        for(let i = 8; i >= 0; i--){
+            arrayOfGridItems[i].innerHTML = '';
+        }
+    };
+
+})()
 
 
 
 
 
-gameboard.check(6);
-gameboard.check(0);
-gameboard.check(1);
-gameboard.check(2);
-gameboard.check(3);
-gameboard.check(4);
-gameboard.check(5);
-gameboard.check(7);
-gameboard.check(8);
 
-gameboard.newGame()
 
-gameboard.check(7);
-gameboard.check(0);
-gameboard.check(1);
-gameboard.check(3);
-gameboard.check(5);
-gameboard.check(6);
 
-gameboard.newGame()
+// gameboard.check(6);
+// gameboard.check(0);
+// gameboard.check(1);
+// gameboard.check(2);
+// gameboard.check(3);
+// gameboard.check(4);
+// gameboard.check(5);
+// gameboard.check(7);
+// gameboard.check(8);
 
-gameboard.check(0);
-gameboard.check(1);
-gameboard.check(3);
-gameboard.check(5);
-gameboard.check(6);
-gameboard.check(7);
+// gameboard.newGame()
+
+// gameboard.check(7);
+// gameboard.check(0);
+// gameboard.check(1);
+// gameboard.check(3);
+// gameboard.check(5);
+// gameboard.check(6);
+
+// gameboard.newGame()
+
+// gameboard.check(0);
+// gameboard.check(1);
+// gameboard.check(3);
+// gameboard.check(5);
+// gameboard.check(6);
+// gameboard.check(7);
 
