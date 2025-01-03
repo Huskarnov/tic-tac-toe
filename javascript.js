@@ -81,6 +81,7 @@ let gameboard = (function GameBoard(){ //data manager object
             }else{
                 playerTwoScore++;
             }
+            domManager.renderScore(playerOneScore, playerTwoScore);
             console.log('Player 1 score:',playerOneScore);
             console.log('Player 2 score:',playerTwoScore);
         }
@@ -93,6 +94,8 @@ let gameboard = (function GameBoard(){ //data manager object
             }
             gameOn = true; 
             player = 1;
+            playerOneScore = 0;
+            playerTwoScore = 0;
         }
 
         const stopGame = function(){
@@ -120,6 +123,10 @@ let domManager = (function(){
 
     const stop = document.querySelector('.stop');
     const newGameButton = document.querySelector('.gameSpace>button');
+    const scorePannel = document.querySelector('.score');
+    const scoreOne = document.querySelector('.scorePannel div:nth-child(1) p');
+    const scoretwo = document.querySelector('.scorePannel div:nth-child(2) p');
+
     const arrayOfGridItems = (document.querySelector('.gameGrid')).children;
     
     //set tiles click event
@@ -144,6 +151,7 @@ let domManager = (function(){
     newGameButton.addEventListener('click', ()=>{
         newGameButton.style.display = 'none';
         stop.style.display = 'block';
+        scorePannel.style.display = 'flex';
         gameboard.newGame();
 
         
@@ -152,6 +160,9 @@ let domManager = (function(){
     stop.addEventListener('click', ()=>{
         stop.style.display = 'none';
         newGameButton.style.display = 'block';
+        scorePannel.style.display = 'none';
+        
+
         gameboard.newGame();
         gameboard.stopGame();
 
@@ -163,8 +174,16 @@ let domManager = (function(){
         for(let i = 8; i >= 0; i--){
             arrayOfGridItems[i].innerHTML = '';
         }
+        scoreOne.innerHTML = '0';
+        scoretwo.innerHTML = '0';
     };
 
+    const renderScore = function(scorePone, scorePtwo){
+            scoreOne.innerHTML = scorePone.toString();
+            scoretwo.innerHTML = scorePtwo.toString();
+    };
+
+    return {renderScore};
 })()
 
 
